@@ -1,0 +1,23 @@
+[
+    {
+        "id": "onepunch4140",
+        "imgUrl": "https://m.media-amazon.com/images/I/719SkVbmqjL._AC_UF1000,1000_QL80_.jpg",
+        "title": "one punch man",
+        "genres": "shonen",
+        "state": true
+    },
+    {
+        "id": "arifureta4008",
+        "imgUrl": "https://m.media-amazon.com/images/I/71oN-n7fX3L._AC_UF894,1000_QL80_.jpg",
+        "title": "Arifureta",
+        "genres": "Accion, Aventura, Fantasia",
+        "state": true
+    },
+    {
+        "id": "1",
+        "imgUrl": "https://bananaroad.com/cdn/shop/products/pst2128_Bleach_Poster_grande.jpg?v=1621363373",
+        "title": "Bleach",
+        "genres": "aventura,sobrenatural, shonen",
+        "state": true
+    }
+]
