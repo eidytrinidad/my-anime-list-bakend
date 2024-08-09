@@ -14,7 +14,7 @@ app.use(express.json());
 //routes
 app.get("/", (req, res) => {
   res.status(200).json({
-    msg: "Hello World",
+    msg: "Welcome to Anime Api, go to ' /api/v1/animes ' to get anime list",
   });
 });
 
