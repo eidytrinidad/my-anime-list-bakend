@@ -1,4 +1,4 @@
-const { createdCustomError } = require("../errors/custom-error");
+const { NotFoundError } = require("../errors");
 const Anime = require("../models/anime");
 
 const getAllAnimes = async (req, res, next) => {
@@ -28,18 +28,14 @@ const getAllAnimes = async (req, res, next) => {
     console.log(error);
   }
 };
-const getAnimeById = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const anime = await Anime.findOne({ _id: id });
-    if (!anime) {
-      console.log(error);
-      res.json({ msg: "Error" });
-    }
-    return res.status(200).json({ anime });
-  } catch (error) {
-    throw new BadRequestError("Please provide email and password");
+const getAnimeById = async (req, res) => {
+  const { id } = req.params;
+  const anime = await Anime.findOne({ _id: id });
+
+  if (!anime) {
+    throw new NotFoundError(`No anime with the id ${id} was found`);
   }
+  return res.status(200).json({ anime });
 };
 
 module.exports = { getAllAnimes, getAnimeById };
