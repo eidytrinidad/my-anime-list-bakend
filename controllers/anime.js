@@ -26,7 +26,6 @@ const getAllAnimes = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    // return next(createdCustomError());
   }
 };
 const getAnimeById = async (req, res, next) => {
@@ -34,13 +33,12 @@ const getAnimeById = async (req, res, next) => {
     const { id } = req.params;
     const anime = await Anime.findOne({ _id: id });
     if (!anime) {
-      return next(
-        createdCustomError(`No existe un anime con ese Id:${id}`, 404)
-      );
+      console.log(error);
+      res.json({ msg: "Error" });
     }
     return res.status(200).json({ anime });
   } catch (error) {
-    return next(createdCustomError());
+    throw new BadRequestError("Please provide email and password");
   }
 };
 
