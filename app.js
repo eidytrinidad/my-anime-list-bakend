@@ -2,18 +2,21 @@ require("dotenv").config();
 require("express-async-errors");
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 //connectDB
 const connectDB = require("./db//connect");
 //const authenticateUser = require("./middleware/authentication");
+
 //routers
 const animesRouter = require("./routes/anime");
-// const jobsRoutes = require("./routes/jobs");
+
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
 app.use(express.json());
+app.use(cors());
 //routes
 app.get("/", (req, res) => {
   res.status(200).json({
