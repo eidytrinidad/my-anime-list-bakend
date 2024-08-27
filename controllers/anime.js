@@ -15,8 +15,16 @@ const getAllAnimes = async (req, res, next) => {
 
   const totalPaginas = total < limit ? 1 : Math.ceil(total / limit);
 
+  const animeData = animes.map((anime) => ({
+    id: anime._id,
+    title: anime.title,
+    genres: anime.genres,
+    state: anime.state,
+    imgUrl: anime.imgUrl,
+  }));
+
   return res.status(StatusCodes.OK).json({
-    data: animes,
+    data: animeData,
     paginacion: {
       total,
       numeroPagina: page,
@@ -32,7 +40,8 @@ const getAnimeById = async (req, res) => {
   if (!anime) {
     throw new NotFoundError(`No anime with the id ${id} was found`);
   }
-  return res.status(StatusCodes.OK).json({ anime });
+
+  return res.status(StatusCodes.OK).json({ data: anime });
 };
 
 const createAnime = async (req, res) => {
