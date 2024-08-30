@@ -3,7 +3,6 @@ const { NotFoundError, BadRequestError } = require("../errors");
 const Anime = require("../models/anime");
 
 const getAllAnimes = async (req, res, next) => {
-  let total = await Anime.countDocuments();
   const queryObj = {};
   
   const { state } = req.query;
@@ -15,7 +14,8 @@ const getAllAnimes = async (req, res, next) => {
   const numeroPagina = Number(req.query.numeroPagina) || 1;
   const limite = Number(req.query.limite) || 10;
   const skip = (numeroPagina - 1) * limite;
-
+  let total = await Anime.countDocuments(queryObj);
+  
   const animes = await result.skip(skip).limit(limite);
 
   const totalPaginas = total < limite ? 1 : Math.ceil(total / limite);
