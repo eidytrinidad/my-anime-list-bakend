@@ -5,15 +5,20 @@ const Anime = require("../models/anime");
 const getAllAnimes = async (req, res, next) => {
   let total = await Anime.countDocuments();
   const queryObj = {};
+  
+  const { state } = req.query;
+  
+  if (state) {
+    queryObj.state = state;
+  }
   let result = Anime.find(queryObj);
+  const numeroPagina = Number(req.query.numeroPagina) || 1;
+  const limite = Number(req.query.limite) || 10;
+  const skip = (numeroPagina - 1) * limite;
 
-  const page = Number(req.query.page) || 1;
-  const limit = Number(req.query.limit) || 10;
-  const skip = (page - 1) * limit;
+  const animes = await result.skip(skip).limit(limite);
 
-  const animes = await result.skip(skip).limit(limit);
-
-  const totalPaginas = total < limit ? 1 : Math.ceil(total / limit);
+  const totalPaginas = total < limite ? 1 : Math.ceil(total / limite);
 
   const animeData = animes.map((anime) => ({
     id: anime._id,
@@ -27,8 +32,8 @@ const getAllAnimes = async (req, res, next) => {
     data: animeData,
     paginacion: {
       total,
-      numeroPagina: page,
-      limite: limit,
+      numeroPagina,
+      limite,
       totalPaginas,
     },
   });
