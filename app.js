@@ -10,6 +10,7 @@ const connectDB = require("./db//connect");
 
 //routers
 const animesRouter = require("./routes/anime");
+const authRouter = require("./routes/auth");
 
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/animes", animesRouter);
+app.use("/api/v1/auth", authRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
