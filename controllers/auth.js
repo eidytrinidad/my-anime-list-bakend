@@ -1,12 +1,10 @@
 const { StatusCodes } = require("http-status-codes");
 const User = require("../models/auth");
-const {
-  BadRequestError,
-  UnauthenticatedError,
-} = require("../errors");
+const { BadRequestError, UnauthenticatedError } = require("../errors");
 
 const register = async (req, res) => {
-  const user = await User.create({ ...req.body });
+
+  const user = await User.create(req.body);
   const token = user.createJWT();
   res.status(StatusCodes.CREATED).json({
     user: { name: user.name },
