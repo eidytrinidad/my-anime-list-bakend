@@ -27,14 +27,22 @@ UserSchema.pre("save", async function () {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
-UserSchema.methods.createJWT = function () {
-  return jwt.sign(
+UserSchema.methods.generateAuthToken = function () {
+  const accessToken = jwt.sign(
     { userId: this._id, name: this.name },
     process.env.JWT_SECRET,
     {
-      expiresIn: process.env.JWT_LIFETIME,
+      expiresIn: "1h",
     }
   );
+
+  const refreshToken = jwt.sign(
+    { userId: this._id, name: this.name },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: "1d" }
+  );
+  const tokens = { accessToken, refreshToken };
+  return tokens;
 };
 
 UserSchema.methods.comparePassword = async function (candidatePassword) {

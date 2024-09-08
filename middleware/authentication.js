@@ -3,8 +3,9 @@ const { UnauthenticatedError } = require("../errors");
 
 const auth = async (req, _, next) => {
   const authHeader = req.headers.authorization;
+  const refreshToken = req.cookies["refreshToken"];
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!authHeader || !authHeader.startsWith("Bearer ") || !refreshToken) {
     throw new UnauthenticatedError("Authentication Invalid");
   }
 
